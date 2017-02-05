@@ -1,0 +1,16 @@
+{
+	"name": "chitanka/utils",
+	"description": "Miscelaneous functionality used in the chitanka projects",
+	"type": "library",
+	"license": [
+		"MIT"
+	],
+	"require": {
+		"php": ">=5.5.9"
+	},
+	"autoload": {
+		"psr-4": {
+			"Chitanka\\Utils\\": "lib"
+		}
+	}
+}
