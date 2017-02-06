@@ -47,4 +47,7 @@ class Typograph {
 		return ltrim($cont, "\n");
 	}
 
+	public static function replaceTimesChar($string) {
+		return preg_replace('/(\d) ?[xXхХ] ?(\d)/u', '$1×$2', $string);
+	}
 }
