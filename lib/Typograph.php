@@ -20,8 +20,6 @@ class Typograph {
 			'<p>' => "\n\t", '<P>' => "\n\t",
 		];
 		$reg_chars = [
-			'/(\s|&nbsp;)(-|–|­){1,2}(\s)/' => '$1—$3', # mdash
-			'/([\s(][\d,.]*)-([\d,.]+[\s)])/' => '$1–$2', # ndash между цифри
 			'/(\d)x(\d)/' => '$1×$2', # знак за умножение
 			'/\n +/' => "\n\t", # абзаци
 			'/(?<!\n)\n\t\* \* \*\n(?!\n)/' => "\n\n\t* * *\n\n",
@@ -29,6 +27,7 @@ class Typograph {
 
 		$cont = preg_replace('/([\s(]\d+ *)-( *\d+[\s),.])/', '$1–$2', "\n".$cont);
 		$cont = str_replace(array_keys($chars), array_values($chars), $cont);
+		$cont = self::replaceDash($cont);
 		$cont = preg_replace(array_keys($reg_chars), array_values($reg_chars), $cont);
 
 		# кавички
@@ -49,5 +48,13 @@ class Typograph {
 
 	public static function replaceTimesChar($string) {
 		return preg_replace('/(\d) ?[xXхХ] ?(\d)/u', '$1×$2', $string);
+	}
+
+	public static function replaceDash($string) {
+		$map = [
+			'/(\s)(-|–|­){1,2}(\s)/' => '$1—$3', # mdash
+			'/([\s(][\d,.]*)-([\d,.]+[\s)])/' => '$1–$2', # ndash между цифри
+		];
+		return preg_replace(array_keys($map), array_values($map), $string);
 	}
 }
